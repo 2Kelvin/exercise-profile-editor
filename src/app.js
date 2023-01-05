@@ -1,25 +1,46 @@
 function ProfileEditor() {
   const [firstName, setFirstName] = React.useState("Jane");
   const [lastName, setLastName] = React.useState("Jacobs");
-  const [inputActive, setInputActive] = React.useState(false);
-  const [editMode, setEditMode] = React.useState(true);
+  const [isEditing, setIsEditing] = React.useState(false);
 
-  function handleClick() {
-    // e.preventDefault;
-    setEditMode(true);
+  function handleFirstNameChange(e) {
+    setFirstName(e.target.value);
+  }
+  function handleLasNameChange(e) {
+    setLastName(e.target.value);
   }
 
   return (
-    <form>
-      <label>First name: {editMode ? <b>{firstName} </b> : <input />}</label>
-      <label>Last name: {editMode ? <b>{lastName} </b> : <input />}</label>
-      <button type="submit" onClick={handleClick}>
-        {editMode ? "Edit Profile" : "Save Profile"}
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        setIsEditing(!isEditing);
+      }}
+    >
+      <label>
+        First name:{" "}
+        {isEditing ? (
+          <input value={firstName} onChange={handleFirstNameChange} />
+        ) : (
+          <b>{firstName} </b>
+        )}
+      </label>
+      <label>
+        Last name:{" "}
+        {isEditing ? (
+          <input value={lastName} onChange={handleLasNameChange} />
+        ) : (
+          <b>{lastName} </b>
+        )}
+      </label>
+      <button type="submit">
+        {isEditing ? "Save Profile" : "Edit Profile"}
       </button>
       <p>
-        <i>
-          Hello, {firstName} {lastName}!
-        </i>
+        Hello,{" "}
+        <span className="_name">
+          {firstName} {lastName}
+        </span>
       </p>
     </form>
   );

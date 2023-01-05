@@ -13,60 +13,64 @@ function ProfileEditor() {
 
   var _React$useState5 = React.useState(false),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
-      inputActive = _React$useState6[0],
-      setInputActive = _React$useState6[1];
+      isEditing = _React$useState6[0],
+      setIsEditing = _React$useState6[1];
 
-  var _React$useState7 = React.useState(true),
-      _React$useState8 = _slicedToArray(_React$useState7, 2),
-      editMode = _React$useState8[0],
-      setEditMode = _React$useState8[1];
-
-  function handleClick() {
-    // e.preventDefault;
-    setEditMode(true);
+  function handleFirstNameChange(e) {
+    setFirstName(e.target.value);
+  }
+  function handleLasNameChange(e) {
+    setLastName(e.target.value);
   }
 
   return React.createElement(
     "form",
-    null,
+    {
+      onSubmit: function onSubmit(e) {
+        e.preventDefault();
+        setIsEditing(!isEditing);
+      }
+    },
     React.createElement(
       "label",
       null,
-      "First name: ",
-      editMode ? React.createElement(
+      "First name:",
+      " ",
+      isEditing ? React.createElement("input", { value: firstName, onChange: handleFirstNameChange }) : React.createElement(
         "b",
         null,
         firstName,
         " "
-      ) : React.createElement("input", null)
+      )
     ),
     React.createElement(
       "label",
       null,
-      "Last name: ",
-      editMode ? React.createElement(
+      "Last name:",
+      " ",
+      isEditing ? React.createElement("input", { value: lastName, onChange: handleLasNameChange }) : React.createElement(
         "b",
         null,
         lastName,
         " "
-      ) : React.createElement("input", null)
+      )
     ),
     React.createElement(
       "button",
-      { type: "submit", onClick: handleClick },
-      editMode ? "Edit Profile" : "Save Profile"
+      { type: "submit" },
+      isEditing ? "Save Profile" : "Edit Profile"
     ),
     React.createElement(
       "p",
       null,
+      "Hello,",
+      " ",
       React.createElement(
-        "i",
-        null,
-        "Hello, ",
+        "span",
+        { className: "_name" },
         firstName,
         " ",
-        lastName,
-        "!"
+        lastName
       )
     )
   );
